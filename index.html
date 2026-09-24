@@ -153,6 +153,12 @@ section{position:relative;z-index:1;padding:5rem 5%}
 .btn-submit:hover{box-shadow:0 0 35px rgba(34,224,240,.5);transform:translateY(-2px)}
 .btn-submit:disabled{opacity:.75;cursor:wait;transform:none}
 .form-note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:1.2rem}
+.sucesso-msg{
+  display:none;text-align:center;padding:1.5rem;margin-top:1.5rem;
+  background:var(--cyan-soft);border:1px solid var(--border);border-radius:12px;
+  color:var(--cyan);font-weight:600;
+}
+.sucesso-msg.ativo{display:block}
 
 /* FOOTER */
 footer{
@@ -275,7 +281,13 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
     </div>
 
     <div class="form-wrap reveal">
-      <form id="form-cotacao" novalidate>
+      <!-- O action aponta direto para o Apps Script. O target="iframe-oculto" faz
+           o POST acontecer num iframe invisível, sem sair da página e sem CORS. -->
+      <form id="form-cotacao"
+            action="https://script.google.com/macros/s/AKfycbzNJQnIkrlT0aEFOL1y1qpsibzex48iqnThZ8goOzGQF8wkrHtikHO1VM4g3SHKIervaw/exec"
+            method="POST"
+            target="iframe-oculto">
+
         <div class="form-row">
           <div class="field">
             <label for="name">Nome / Empresa <span class="req">*</span></label>
@@ -337,6 +349,10 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
         <button type="submit" class="btn-submit">Enviar Solicitação →</button>
         <p class="form-note">Seus dados são enviados diretamente para nosso e-mail. Sem spam.</p>
       </form>
+
+      <div id="sucesso" class="sucesso-msg">
+        ✓ Solicitação enviada! Responderemos em até 24h úteis.
+      </div>
     </div>
   </div>
 </section>
@@ -348,6 +364,9 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
   </div>
   <p>© <span id="year"></span> TI Atualizado — Criação de sites profissionais.</p>
 </footer>
+
+<!-- Iframe oculto: recebe o POST do formulário sem tirar o usuário da página -->
+<iframe name="iframe-oculto" id="iframe-oculto" style="display:none;"></iframe>
 
 <script>
 // Ano no footer
@@ -371,44 +390,20 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ============================================
-// Envio do formulário para o Google Apps Script
+// Feedback visual após envio via iframe
 // ============================================
-const URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbzNJQnIkrlT0aEFOL1y1qpsibzex48iqnThZ8goOzGQF8wkrHtikHO1VM4g3SHKIervaw/exec';
+const form = document.getElementById('form-cotacao');
+const sucesso = document.getElementById('sucesso');
 
-document.getElementById('form-cotacao').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  if (!this.checkValidity()) {
-    this.reportValidity();
-    return;
-  }
-
-  const btn = this.querySelector('button[type="submit"]');
-  const textoOriginal = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-
-  try {
-    const formData = new FormData(this);
-
-    await fetch(URL_WEB_APP, {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors'
-    });
-
-    this.reset();
-    btn.textContent = 'Enviado ✓';
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.textContent = textoOriginal;
-    }, 3000);
-
-  } catch (err) {
-    btn.disabled = false;
-    btn.textContent = textoOriginal;
-    alert('Erro ao enviar. Tente novamente ou envie um e-mail diretamente.');
-  }
+form.addEventListener('submit', function() {
+  // O envio é feito nativamente pelo navegador para o iframe.
+  // Aqui só damos feedback visual e resetamos o form.
+  setTimeout(() => {
+    form.reset();
+    sucesso.classList.add('ativo');
+    sucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => sucesso.classList.remove('ativo'), 6000);
+  }, 800);
 });
 </script>
 
