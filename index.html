@@ -6,6 +6,8 @@
 <title>TI Atualizado — Criação de Sites Profissionais</title>
 <meta name="description" content="Criação de sites sob medida para o seu negócio. Solicite uma cotação.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2322E0F0'>TA</text></svg>">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0B1A33">
 <style>
 :root{
   --bg:#0B1A33;
@@ -143,10 +145,6 @@ section{position:relative;z-index:1;padding:5rem 5%}
 .field textarea{resize:vertical;min-height:130px}
 .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2322E0F0' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer;}
-
-/* CAPTCHA */
-.captcha-wrap{display:flex;justify-content:center;margin:1rem 0 1.4rem}
-
 .btn-submit{
   width:100%;background:var(--cyan);color:#062033;padding:1rem;border-radius:10px;
   font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:.25s;
@@ -284,7 +282,7 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
         <!-- Assunto do e-mail -->
         <input type="hidden" name="subject" value="Nova cotação - TI Atualizado">
 
-        <!-- Anti-spam honeypot (mantido em conjunto com o hCaptcha) -->
+        <!-- Anti-spam honeypot -->
         <input type="checkbox" name="botcheck" style="display:none">
 
         <div class="form-row">
@@ -345,11 +343,6 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
           <textarea id="details" name="detalhes" placeholder="Conte sobre o objetivo do site, funcionalidades desejadas, público-alvo..." required></textarea>
         </div>
 
-        <!-- hCaptcha (Web3Forms injeta automaticamente) -->
-        <div class="captcha-wrap">
-          <div class="h-captcha" data-captcha="true"></div>
-        </div>
-
         <button type="submit" class="btn-submit">Enviar Solicitação →</button>
         <p class="form-note">Seus dados são enviados diretamente para nosso e-mail. Sem spam.</p>
       </form>
@@ -387,9 +380,6 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
-
-<!-- Script do Web3Forms (carrega o hCaptcha automaticamente) -->
-<script src="https://web3forms.com/client/script.js" async defer></script>
 
 </body>
 </html>
