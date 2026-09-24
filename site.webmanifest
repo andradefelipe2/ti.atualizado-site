@@ -1,0 +1,31 @@
+{
+  "name": "TI Atualizado — Criação de Sites Profissionais",
+  "short_name": "TI Atualizado",
+  "description": "Criação de sites sob medida para o seu negócio. Solicite uma cotação.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1A33",
+  "theme_color": "#0B1A33",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
