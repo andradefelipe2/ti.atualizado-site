@@ -390,12 +390,10 @@ document.getElementById('form-cotacao').addEventListener('submit', async functio
 
   try {
     const formData = new FormData(this);
-    const params = new URLSearchParams(formData).toString();
 
     await fetch(URL_WEB_APP, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params,
+      body: formData,
       mode: 'no-cors'
     });
 
