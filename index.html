@@ -3,11 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TI Atualizado — Criação de Sites Profissionais</title>
-<meta name="description" content="Criação de sites sob medida para o seu negócio. Solicite uma cotação.">
+<title id="page-title">TI Atualizado — Criação de Sites Profissionais</title>
+<meta id="page-desc" name="description" content="Criação de sites sob medida para o seu negócio. Solicite uma cotação.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2322E0F0'>TA</text></svg>">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0B1A33">
+<script>
+// Aplica tema e idioma salvos ANTES da renderização, pra evitar flash de conteúdo errado
+(function(){
+  var theme = localStorage.getItem('ta-theme');
+  if(!theme){
+    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+
+  var lang = localStorage.getItem('ta-lang') || 'pt';
+  document.documentElement.setAttribute('data-lang', lang);
+})();
+</script>
 <style>
 :root{
   --bg:#0B1A33;
@@ -18,6 +31,18 @@
   --text:#E8F4F8;
   --muted:#8AA8C4;
   --border:rgba(34,224,240,.18);
+  --btn-text:#062033;
+}
+:root[data-theme="light"]{
+  --bg:#F4FAFC;
+  --bg-2:#FFFFFF;
+  --bg-3:#EAF6FA;
+  --cyan:#0B90AE;
+  --cyan-soft:rgba(11,144,174,.10);
+  --text:#0E2233;
+  --muted:#54728A;
+  --border:rgba(11,144,174,.22);
+  --btn-text:#FFFFFF;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -25,6 +50,7 @@ body{
   font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.6;
   overflow-x:hidden;
+  transition:background .3s, color .3s;
 }
 body::before{
   content:'';position:fixed;top:-30%;left:-20%;width:800px;height:800px;
@@ -39,6 +65,7 @@ nav{
   background:rgba(11,26,51,.85);backdrop-filter:blur(12px);
   border-bottom:1px solid transparent;transition:.3s;
 }
+:root[data-theme="light"] nav{ background:rgba(244,250,252,.85); }
 nav.scrolled{border-bottom-color:var(--border)}
 .logo{display:flex;align-items:center;gap:.7rem;font-weight:800;font-size:1.4rem;letter-spacing:.5px}
 .logo-mark{
@@ -50,8 +77,39 @@ nav.scrolled{border-bottom-color:var(--border)}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.95rem;transition:.2s}
 .nav-links a:hover{color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+
+/* TOGGLES: tema e idioma */
+.toggle-group{
+  display:flex;align-items:center;gap:.35rem;
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:999px;padding:.3rem;
+}
+.icon-btn{
+  width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--muted);transition:.2s;
+}
+.icon-btn:hover{background:var(--cyan-soft);color:var(--cyan)}
+.icon-btn svg{width:16px;height:16px;fill:currentColor}
+#theme-toggle .icon-sun,#theme-toggle .icon-moon{display:none}
+:root[data-theme="dark"] #theme-toggle .icon-sun{display:flex}
+:root[data-theme="light"] #theme-toggle .icon-moon{display:flex}
+#theme-toggle{background:var(--cyan-soft);color:var(--cyan)}
+
+.lang-group{
+  display:flex;align-items:center;gap:.15rem;
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:999px;padding:.25rem;font-size:.75rem;font-weight:700;
+}
+.lang-btn{
+  border:none;background:transparent;color:var(--muted);cursor:pointer;
+  padding:.35rem .6rem;border-radius:999px;transition:.2s;letter-spacing:.3px;
+}
+.lang-btn.active{background:var(--cyan);color:var(--btn-text)}
+
 .btn-cta{
-  background:var(--cyan);color:#062033;padding:.6rem 1.4rem;border-radius:8px;
+  background:var(--cyan);color:var(--btn-text);padding:.6rem 1.4rem;border-radius:8px;
   font-weight:700;text-decoration:none;font-size:.9rem;transition:.25s;
   border:none;cursor:pointer;
 }
@@ -85,7 +143,7 @@ nav.scrolled{border-bottom-color:var(--border)}
 .hero p{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:620px;margin-bottom:2.5rem}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
 .btn-primary{
-  background:var(--cyan);color:#062033;padding:.9rem 2rem;border-radius:10px;
+  background:var(--cyan);color:var(--btn-text);padding:.9rem 2rem;border-radius:10px;
   font-weight:700;text-decoration:none;font-size:1rem;transition:.25s;
   box-shadow:0 0 0 rgba(34,224,240,0);
 }
@@ -186,7 +244,7 @@ section{position:relative;z-index:1;padding:5rem 5%}
 .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2322E0F0' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer;}
 .btn-submit{
-  width:100%;background:var(--cyan);color:#062033;padding:1rem;border-radius:10px;
+  width:100%;background:var(--cyan);color:var(--btn-text);padding:1rem;border-radius:10px;
   font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:.25s;
   font-family:inherit;margin-top:.5rem;
 }
@@ -253,27 +311,39 @@ footer .social a.email:hover{
     <span>TI Atualizado</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#processo">Processo</a></li>
-    <li><a href="#cotacao">Cotação</a></li>
+    <li><a href="#servicos" data-i18n="nav_servicos">Serviços</a></li>
+    <li><a href="#processo" data-i18n="nav_processo">Processo</a></li>
+    <li><a href="#cotacao" data-i18n="nav_cotacao">Cotação</a></li>
   </ul>
-  <a href="#cotacao" class="btn-cta">Solicitar Cotação</a>
+  <div class="nav-right">
+    <div class="toggle-group">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5a1 1 0 011-1V2a1 1 0 10-2 0v1.5a1 1 0 011 1zm0 15a1 1 0 011 1V22a1 1 0 10-2 0v-1.5a1 1 0 011-1zM4.5 12a1 1 0 01-1 1H2a1 1 0 110-2h1.5a1 1 0 011 1zm18 0a1 1 0 01-1 1h-1.5a1 1 0 110-2H21a1 1 0 011 1zM6.34 6.34a1 1 0 011.41 0l1.06 1.06A1 1 0 117.4 8.82L6.34 7.76a1 1 0 010-1.42zm9.9 9.9a1 1 0 011.41 0l1.06 1.06a1 1 0 11-1.41 1.41l-1.06-1.06a1 1 0 010-1.41zM17.66 6.34a1 1 0 010 1.41l-1.06 1.06a1 1 0 11-1.41-1.41l1.06-1.06a1 1 0 011.41 0zm-9.9 9.9a1 1 0 010 1.41l-1.06 1.06a1 1 0 11-1.41-1.41l1.06-1.06a1 1 0 011.41 0zM12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.742 13.045a8.088 8.088 0 01-2.077.273c-4.508 0-8.16-3.653-8.16-8.16 0-1.474.393-2.858 1.079-4.051A10.083 10.083 0 002 11.9C2 17.485 6.515 22 12.1 22a10.083 10.083 0 008.642-4.955z"/></svg>
+      </button>
+    </div>
+    <div class="lang-group">
+      <button class="lang-btn" data-lang-btn="pt" type="button">PT</button>
+      <button class="lang-btn" data-lang-btn="en" type="button">EN</button>
+    </div>
+    <a href="#cotacao" class="btn-cta" data-i18n="nav_cta">Solicitar Cotação</a>
+  </div>
 </nav>
 
 <header class="hero">
-  <div class="hero-badge">Disponível para novos projetos</div>
-  <h1>Sites que <span>vendem</span> para o seu negócio</h1>
-  <p>Desenvolvimento web sob medida, rápido, moderno e focado em resultado. Do layout ao deploy, cuidamos de tudo.</p>
+  <div class="hero-badge" data-i18n="hero_badge">Disponível para novos projetos</div>
+  <h1 data-i18n-html="hero_h1">Sites que <span>vendem</span> para o seu negócio</h1>
+  <p data-i18n="hero_p">Desenvolvimento web sob medida, rápido, moderno e focado em resultado. Do layout ao deploy, cuidamos de tudo.</p>
   <div class="hero-actions">
-    <a href="#cotacao" class="btn-primary">Solicitar Cotação</a>
-    <a href="#servicos" class="btn-ghost">Ver Serviços</a>
+    <a href="#cotacao" class="btn-primary" data-i18n="hero_btn_cotacao">Solicitar Cotação</a>
+    <a href="#servicos" class="btn-ghost" data-i18n="hero_btn_servicos">Ver Serviços</a>
     <a href="https://www.instagram.com/ti.atualizado/" target="_blank" rel="noopener noreferrer" class="btn-instagram">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-      Instagram
+      <span data-i18n="btn_instagram">Instagram</span>
     </a>
     <a href="mailto:ti.atualizado@outlook.com.br" class="btn-email">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      E-mail
+      <span data-i18n="btn_email">E-mail</span>
     </a>
   </div>
 </header>
@@ -281,39 +351,39 @@ footer .social a.email:hover{
 <section id="servicos">
   <div class="container">
     <div class="section-head reveal">
-      <h2>O que fazemos</h2>
-      <p>Soluções completas para sua presença digital.</p>
+      <h2 data-i18n="servicos_h2">O que fazemos</h2>
+      <p data-i18n="servicos_p">Soluções completas para sua presença digital.</p>
     </div>
     <div class="grid-services">
       <div class="card reveal">
         <div class="card-icon">🚀</div>
-        <h3>Landing Pages</h3>
-        <p>Páginas de alta conversão para campanhas, lançamentos e captação de leads.</p>
+        <h3 data-i18n="card1_title">Landing Pages</h3>
+        <p data-i18n="card1_desc">Páginas de alta conversão para campanhas, lançamentos e captação de leads.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">💼</div>
-        <h3>Sites Institucionais</h3>
-        <p>Presença profissional para sua empresa, com design moderno e responsivo.</p>
+        <h3 data-i18n="card2_title">Sites Institucionais</h3>
+        <p data-i18n="card2_desc">Presença profissional para sua empresa, com design moderno e responsivo.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">🛒</div>
-        <h3>E-commerce</h3>
-        <p>Lojas virtuais completas, com carrinho, pagamento e gestão de produtos.</p>
+        <h3 data-i18n="card3_title">E-commerce</h3>
+        <p data-i18n="card3_desc">Lojas virtuais completas, com carrinho, pagamento e gestão de produtos.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">🎨</div>
-        <h3>UI/UX Design</h3>
-        <p>Interfaces pensadas na experiência do usuário, do wireframe ao protótipo.</p>
+        <h3 data-i18n="card4_title">UI/UX Design</h3>
+        <p data-i18n="card4_desc">Interfaces pensadas na experiência do usuário, do wireframe ao protótipo.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">⚡</div>
-        <h3>Performance</h3>
-        <p>Otimização de velocidade, SEO técnico e boas práticas de Core Web Vitals.</p>
+        <h3 data-i18n="card5_title">Performance</h3>
+        <p data-i18n="card5_desc">Otimização de velocidade, SEO técnico e boas práticas de Core Web Vitals.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">🔧</div>
-        <h3>Manutenção</h3>
-        <p>Suporte contínuo, atualizações e melhorias após o lançamento do site.</p>
+        <h3 data-i18n="card6_title">Manutenção</h3>
+        <p data-i18n="card6_desc">Suporte contínuo, atualizações e melhorias após o lançamento do site.</p>
       </div>
     </div>
   </div>
@@ -322,24 +392,24 @@ footer .social a.email:hover{
 <section id="processo" class="form-section">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Como funciona</h2>
-      <p>Um processo simples, transparente e sem surpresas.</p>
+      <h2 data-i18n="processo_h2">Como funciona</h2>
+      <p data-i18n="processo_p">Um processo simples, transparente e sem surpresas.</p>
     </div>
     <div class="grid-services">
       <div class="card reveal">
         <div class="card-icon">1</div>
-        <h3>Briefing</h3>
-        <p>Você preenche o formulário com as necessidades do projeto e o orçamento previsto.</p>
+        <h3 data-i18n="step1_title">Briefing</h3>
+        <p data-i18n="step1_desc">Você preenche o formulário com as necessidades do projeto e o orçamento previsto.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">2</div>
-        <h3>Proposta</h3>
-        <p>Enviamos uma proposta detalhada com escopo, prazo e valor por e-mail.</p>
+        <h3 data-i18n="step2_title">Proposta</h3>
+        <p data-i18n="step2_desc">Enviamos uma proposta detalhada com escopo, prazo e valor por e-mail.</p>
       </div>
       <div class="card reveal">
         <div class="card-icon">3</div>
-        <h3>Entrega</h3>
-        <p>Desenvolvemos, testamos e publicamos o site. Você acompanha cada etapa.</p>
+        <h3 data-i18n="step3_title">Entrega</h3>
+        <p data-i18n="step3_desc">Desenvolvemos, testamos e publicamos o site. Você acompanha cada etapa.</p>
       </div>
     </div>
   </div>
@@ -348,8 +418,8 @@ footer .social a.email:hover{
 <section id="cotacao">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Solicite sua cotação</h2>
-      <p>Preencha o formulário abaixo. Responderemos por e-mail em até 24h úteis.</p>
+      <h2 data-i18n="cotacao_h2">Solicite sua cotação</h2>
+      <p data-i18n="cotacao_p">Preencha o formulário abaixo. Responderemos por e-mail em até 24h úteis.</p>
     </div>
 
     <div class="form-wrap reveal">
@@ -362,67 +432,67 @@ footer .social a.email:hover{
 
         <div class="form-row">
           <div class="field">
-            <label for="name">Nome / Empresa <span class="req">*</span></label>
-            <input type="text" id="name" name="nome" placeholder="Seu nome ou empresa" required>
+            <label for="name"><span data-i18n="label_nome">Nome / Empresa</span> <span class="req">*</span></label>
+            <input type="text" id="name" name="nome" data-i18n-placeholder="ph_nome" placeholder="Seu nome ou empresa" required>
           </div>
           <div class="field">
-            <label for="email">E-mail <span class="req">*</span></label>
+            <label for="email"><span data-i18n="label_email">E-mail</span> <span class="req">*</span></label>
             <input type="email" id="email" name="email" placeholder="voce@email.com" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="field">
-            <label for="project">Tipo de projeto <span class="req">*</span></label>
+            <label for="project"><span data-i18n="label_tipo">Tipo de projeto</span> <span class="req">*</span></label>
             <select id="project" name="tipo_projeto" required>
-              <option value="" disabled selected>Selecione...</option>
-              <option value="landing">Landing Page</option>
-              <option value="institucional">Site Institucional</option>
-              <option value="ecommerce">E-commerce</option>
-              <option value="redesign">Redesign de site existente</option>
-              <option value="outro">Outro</option>
+              <option value="" disabled selected data-i18n="opt_selecione">Selecione...</option>
+              <option value="landing" data-i18n="opt_landing">Landing Page</option>
+              <option value="institucional" data-i18n="opt_institucional">Site Institucional</option>
+              <option value="ecommerce" data-i18n="opt_ecommerce">E-commerce</option>
+              <option value="redesign" data-i18n="opt_redesign">Redesign de site existente</option>
+              <option value="outro" data-i18n="opt_outro">Outro</option>
             </select>
           </div>
           <div class="field">
-            <label for="budget">Orçamento previsto <span class="req">*</span></label>
+            <label for="budget"><span data-i18n="label_orcamento">Orçamento previsto</span> <span class="req">*</span></label>
             <select id="budget" name="orcamento" required>
-              <option value="" disabled selected>Selecione...</option>
-              <option value="ate-2k">Até R$ 2.000</option>
-              <option value="2k-5k">R$ 2.000 – R$ 5.000</option>
-              <option value="5k-10k">R$ 5.000 – R$ 10.000</option>
-              <option value="10k-30k">R$ 10.000 – R$ 30.000</option>
-              <option value="30k+">Acima de R$ 30.000</option>
+              <option value="" disabled selected data-i18n="opt_selecione">Selecione...</option>
+              <option value="ate-2k" data-i18n="opt_ate2k">Até R$ 2.000</option>
+              <option value="2k-5k" data-i18n="opt_2k5k">R$ 2.000 – R$ 5.000</option>
+              <option value="5k-10k" data-i18n="opt_5k10k">R$ 5.000 – R$ 10.000</option>
+              <option value="10k-30k" data-i18n="opt_10k30k">R$ 10.000 – R$ 30.000</option>
+              <option value="30k+" data-i18n="opt_30k">Acima de R$ 30.000</option>
             </select>
           </div>
         </div>
 
         <div class="form-row">
           <div class="field">
-            <label for="timeline">Prazo desejado</label>
+            <label for="timeline" data-i18n="label_prazo">Prazo desejado</label>
             <select id="timeline" name="prazo">
-              <option value="" disabled selected>Selecione...</option>
-              <option value="urgente">O mais rápido possível</option>
-              <option value="1mes">Dentro de 1 mês</option>
-              <option value="3meses">Dentro de 3 meses</option>
-              <option value="flexivel">Flexível</option>
+              <option value="" disabled selected data-i18n="opt_selecione">Selecione...</option>
+              <option value="urgente" data-i18n="opt_urgente">O mais rápido possível</option>
+              <option value="1mes" data-i18n="opt_1mes">Dentro de 1 mês</option>
+              <option value="3meses" data-i18n="opt_3meses">Dentro de 3 meses</option>
+              <option value="flexivel" data-i18n="opt_flexivel">Flexível</option>
             </select>
           </div>
           <div class="field">
-            <label for="reference">Site de referência (opcional)</label>
+            <label for="reference" data-i18n="label_referencia">Site de referência (opcional)</label>
             <input type="url" id="reference" name="referencia" placeholder="https://exemplo.com">
           </div>
         </div>
 
         <div class="field">
-          <label for="details">Descreva seu projeto <span class="req">*</span></label>
-          <textarea id="details" name="detalhes" placeholder="Conte sobre o objetivo do site, funcionalidades desejadas, público-alvo..." required></textarea>
+          <label for="details"><span data-i18n="label_detalhes">Descreva seu projeto</span> <span class="req">*</span></label>
+          <textarea id="details" name="detalhes" data-i18n-placeholder="ph_detalhes" placeholder="Conte sobre o objetivo do site, funcionalidades desejadas, público-alvo..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-submit">Enviar Solicitação →</button>
-        <p class="form-note">Prefere e-mail? Escreva para <a href="mailto:ti.atualizado@outlook.com.br">ti.atualizado@outlook.com.br</a></p>
+        <button type="submit" class="btn-submit" data-i18n="btn_enviar">Enviar Solicitação →</button>
+        <p class="form-note"><span data-i18n="form_note_pre">Prefere e-mail? Escreva para</span> <a href="mailto:ti.atualizado@outlook.com.br">ti.atualizado@outlook.com.br</a></p>
       </form>
 
-      <div id="sucesso" class="sucesso-msg">
+      <div id="sucesso" class="sucesso-msg" data-i18n="sucesso_msg">
         ✓ Solicitação enviada! Responderemos em até 24h úteis.
       </div>
     </div>
@@ -442,23 +512,29 @@ footer .social a.email:hover{
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
     </a>
   </div>
-  <p>© <span id="year"></span> TI Atualizado — Criação de sites profissionais.</p>
+  <p><span>© <span id="year"></span> TI Atualizado — </span><span data-i18n="footer_tagline">Criação de sites profissionais.</span></p>
 </footer>
 
 <!-- Iframe oculto: recebe o POST do formulário sem tirar o usuário da página -->
 <iframe name="iframe-oculto" id="iframe-oculto" style="display:none;"></iframe>
 
 <script>
+// ============================================
 // Ano no footer
+// ============================================
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// ============================================
 // Navbar com borda ao rolar
+// ============================================
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
+// ============================================
 // Animação de revelação
+// ============================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -476,8 +552,6 @@ const form = document.getElementById('form-cotacao');
 const sucesso = document.getElementById('sucesso');
 
 form.addEventListener('submit', function() {
-  // O envio é feito nativamente pelo navegador para o iframe.
-  // Aqui só damos feedback visual e resetamos o form.
   setTimeout(() => {
     form.reset();
     sucesso.classList.add('ativo');
@@ -485,6 +559,194 @@ form.addEventListener('submit', function() {
     setTimeout(() => sucesso.classList.remove('ativo'), 6000);
   }, 800);
 });
+
+// ============================================
+// TEMA CLARO / ESCURO
+// ============================================
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('ta-theme', next); } catch(e) {}
+});
+
+// ============================================
+// IDIOMA PT-BR / EN-US
+// ============================================
+const translations = {
+  pt: {
+    title: "TI Atualizado — Criação de Sites Profissionais",
+    desc: "Criação de sites sob medida para o seu negócio. Solicite uma cotação.",
+    nav_servicos: "Serviços",
+    nav_processo: "Processo",
+    nav_cotacao: "Cotação",
+    nav_cta: "Solicitar Cotação",
+    hero_badge: "Disponível para novos projetos",
+    hero_h1: "Sites que <span>vendem</span> para o seu negócio",
+    hero_p: "Desenvolvimento web sob medida, rápido, moderno e focado em resultado. Do layout ao deploy, cuidamos de tudo.",
+    hero_btn_cotacao: "Solicitar Cotação",
+    hero_btn_servicos: "Ver Serviços",
+    btn_instagram: "Instagram",
+    btn_email: "E-mail",
+    servicos_h2: "O que fazemos",
+    servicos_p: "Soluções completas para sua presença digital.",
+    card1_title: "Landing Pages",
+    card1_desc: "Páginas de alta conversão para campanhas, lançamentos e captação de leads.",
+    card2_title: "Sites Institucionais",
+    card2_desc: "Presença profissional para sua empresa, com design moderno e responsivo.",
+    card3_title: "E-commerce",
+    card3_desc: "Lojas virtuais completas, com carrinho, pagamento e gestão de produtos.",
+    card4_title: "UI/UX Design",
+    card4_desc: "Interfaces pensadas na experiência do usuário, do wireframe ao protótipo.",
+    card5_title: "Performance",
+    card5_desc: "Otimização de velocidade, SEO técnico e boas práticas de Core Web Vitals.",
+    card6_title: "Manutenção",
+    card6_desc: "Suporte contínuo, atualizações e melhorias após o lançamento do site.",
+    processo_h2: "Como funciona",
+    processo_p: "Um processo simples, transparente e sem surpresas.",
+    step1_title: "Briefing",
+    step1_desc: "Você preenche o formulário com as necessidades do projeto e o orçamento previsto.",
+    step2_title: "Proposta",
+    step2_desc: "Enviamos uma proposta detalhada com escopo, prazo e valor por e-mail.",
+    step3_title: "Entrega",
+    step3_desc: "Desenvolvemos, testamos e publicamos o site. Você acompanha cada etapa.",
+    cotacao_h2: "Solicite sua cotação",
+    cotacao_p: "Preencha o formulário abaixo. Responderemos por e-mail em até 24h úteis.",
+    label_nome: "Nome / Empresa",
+    ph_nome: "Seu nome ou empresa",
+    label_email: "E-mail",
+    label_tipo: "Tipo de projeto",
+    label_orcamento: "Orçamento previsto",
+    label_prazo: "Prazo desejado",
+    label_referencia: "Site de referência (opcional)",
+    label_detalhes: "Descreva seu projeto",
+    ph_detalhes: "Conte sobre o objetivo do site, funcionalidades desejadas, público-alvo...",
+    opt_selecione: "Selecione...",
+    opt_landing: "Landing Page",
+    opt_institucional: "Site Institucional",
+    opt_ecommerce: "E-commerce",
+    opt_redesign: "Redesign de site existente",
+    opt_outro: "Outro",
+    opt_ate2k: "Até R$ 2.000",
+    opt_2k5k: "R$ 2.000 – R$ 5.000",
+    opt_5k10k: "R$ 5.000 – R$ 10.000",
+    opt_10k30k: "R$ 10.000 – R$ 30.000",
+    opt_30k: "Acima de R$ 30.000",
+    opt_urgente: "O mais rápido possível",
+    opt_1mes: "Dentro de 1 mês",
+    opt_3meses: "Dentro de 3 meses",
+    opt_flexivel: "Flexível",
+    btn_enviar: "Enviar Solicitação →",
+    form_note_pre: "Prefere e-mail? Escreva para",
+    sucesso_msg: "✓ Solicitação enviada! Responderemos em até 24h úteis.",
+    footer_tagline: "Criação de sites profissionais."
+  },
+  en: {
+    title: "TI Atualizado — Professional Website Creation",
+    desc: "Custom website development for your business. Request a quote.",
+    nav_servicos: "Services",
+    nav_processo: "Process",
+    nav_cotacao: "Quote",
+    nav_cta: "Request a Quote",
+    hero_badge: "Available for new projects",
+    hero_h1: "Websites that <span>sell</span> for your business",
+    hero_p: "Custom web development, fast, modern and results-focused. From layout to deploy, we handle everything.",
+    hero_btn_cotacao: "Request a Quote",
+    hero_btn_servicos: "View Services",
+    btn_instagram: "Instagram",
+    btn_email: "Email",
+    servicos_h2: "What we do",
+    servicos_p: "Complete solutions for your digital presence.",
+    card1_title: "Landing Pages",
+    card1_desc: "High-conversion pages for campaigns, launches and lead generation.",
+    card2_title: "Business Websites",
+    card2_desc: "Professional presence for your company, with modern and responsive design.",
+    card3_title: "E-commerce",
+    card3_desc: "Complete online stores, with cart, payment and product management.",
+    card4_title: "UI/UX Design",
+    card4_desc: "Interfaces designed around user experience, from wireframe to prototype.",
+    card5_title: "Performance",
+    card5_desc: "Speed optimization, technical SEO and Core Web Vitals best practices.",
+    card6_title: "Maintenance",
+    card6_desc: "Ongoing support, updates and improvements after the site launches.",
+    processo_h2: "How it works",
+    processo_p: "A simple, transparent process with no surprises.",
+    step1_title: "Briefing",
+    step1_desc: "You fill out the form with your project needs and expected budget.",
+    step2_title: "Proposal",
+    step2_desc: "We send a detailed proposal with scope, timeline and price by email.",
+    step3_title: "Delivery",
+    step3_desc: "We develop, test and publish the site. You follow every step.",
+    cotacao_h2: "Request your quote",
+    cotacao_p: "Fill out the form below. We'll reply by email within 24 business hours.",
+    label_nome: "Name / Company",
+    ph_nome: "Your name or company",
+    label_email: "Email",
+    label_tipo: "Project type",
+    label_orcamento: "Expected budget",
+    label_prazo: "Desired timeline",
+    label_referencia: "Reference site (optional)",
+    label_detalhes: "Describe your project",
+    ph_detalhes: "Tell us about the site's goal, desired features, target audience...",
+    opt_selecione: "Select...",
+    opt_landing: "Landing Page",
+    opt_institucional: "Business Website",
+    opt_ecommerce: "E-commerce",
+    opt_redesign: "Redesign of existing site",
+    opt_outro: "Other",
+    opt_ate2k: "Up to $2,000",
+    opt_2k5k: "$2,000 – $5,000",
+    opt_5k10k: "$5,000 – $10,000",
+    opt_10k30k: "$10,000 – $30,000",
+    opt_30k: "Above $30,000",
+    opt_urgente: "As soon as possible",
+    opt_1mes: "Within 1 month",
+    opt_3meses: "Within 3 months",
+    opt_flexivel: "Flexible",
+    btn_enviar: "Send Request →",
+    form_note_pre: "Prefer email? Write to",
+    sucesso_msg: "✓ Request sent! We'll reply within 24 business hours.",
+    footer_tagline: "Professional website creation."
+  }
+};
+
+function applyLanguage(lang){
+  const dict = translations[lang] || translations.pt;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if(dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+  });
+
+  document.getElementById('page-title').textContent = dict.title;
+  document.getElementById('page-desc').setAttribute('content', dict.desc);
+  document.documentElement.setAttribute('lang', lang === 'en' ? 'en-US' : 'pt-BR');
+  document.documentElement.setAttribute('data-lang', lang);
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+  });
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.getAttribute('data-lang-btn');
+    try { localStorage.setItem('ta-lang', lang); } catch(e) {}
+    applyLanguage(lang);
+  });
+});
+
+// Aplica o idioma salvo (ou padrão pt) assim que a página carrega
+applyLanguage(document.documentElement.getAttribute('data-lang') || 'pt');
 </script>
 
 </body>
