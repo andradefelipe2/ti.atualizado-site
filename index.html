@@ -96,6 +96,46 @@ nav.scrolled{border-bottom-color:var(--border)}
 }
 .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-soft)}
 
+/* BOTÃO INSTAGRAM */
+.btn-instagram{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border:1px solid var(--border);color:var(--text);
+  padding:.9rem 2rem;border-radius:10px;text-decoration:none;
+  font-weight:600;font-size:1rem;transition:.25s;
+  position:relative;overflow:hidden;
+}
+.btn-instagram svg{
+  width:18px;height:18px;flex-shrink:0;
+  fill:currentColor;transition:.25s;
+}
+.btn-instagram:hover{
+  border-color:transparent;color:#fff;
+  background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+  box-shadow:0 0 30px rgba(220,39,103,.45);
+  transform:translateY(-3px);
+}
+.btn-instagram:hover svg{fill:#fff}
+
+/* BOTÃO E-MAIL */
+.btn-email{
+  display:inline-flex;align-items:center;gap:.6rem;
+  border:1px solid var(--border);color:var(--text);
+  padding:.9rem 2rem;border-radius:10px;text-decoration:none;
+  font-weight:600;font-size:1rem;transition:.25s;
+  position:relative;overflow:hidden;
+}
+.btn-email svg{
+  width:18px;height:18px;flex-shrink:0;
+  fill:currentColor;transition:.25s;
+}
+.btn-email:hover{
+  border-color:transparent;color:#fff;
+  background:linear-gradient(135deg,#22E0F0 0%,#1FA8D4 50%,#0078D4 100%);
+  box-shadow:0 0 30px rgba(34,224,240,.45);
+  transform:translateY(-3px);
+}
+.btn-email:hover svg{fill:#fff}
+
 /* SECTIONS */
 section{position:relative;z-index:1;padding:5rem 5%}
 .section-head{text-align:center;margin-bottom:3.5rem}
@@ -153,6 +193,8 @@ section{position:relative;z-index:1;padding:5rem 5%}
 .btn-submit:hover{box-shadow:0 0 35px rgba(34,224,240,.5);transform:translateY(-2px)}
 .btn-submit:disabled{opacity:.75;cursor:wait;transform:none}
 .form-note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:1.2rem}
+.form-note a{color:var(--cyan);text-decoration:none;font-weight:600;transition:.2s}
+.form-note a:hover{text-decoration:underline}
 .sucesso-msg{
   display:none;text-align:center;padding:1.5rem;margin-top:1.5rem;
   background:var(--cyan-soft);border:1px solid var(--border);border-radius:12px;
@@ -166,6 +208,28 @@ footer{
   border-top:1px solid var(--border);color:var(--muted);font-size:.9rem;
 }
 footer .logo{justify-content:center;margin-bottom:.8rem}
+footer .social{
+  display:flex;justify-content:center;gap:1rem;margin-bottom:1.2rem;
+}
+footer .social a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:10px;
+  border:1px solid var(--border);color:var(--muted);
+  text-decoration:none;transition:.25s;
+}
+footer .social a svg{width:20px;height:20px;fill:currentColor;transition:.25s}
+footer .social a.instagram:hover{
+  border-color:transparent;color:#fff;
+  background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+  box-shadow:0 0 25px rgba(220,39,103,.4);
+  transform:translateY(-3px);
+}
+footer .social a.email:hover{
+  border-color:transparent;color:#fff;
+  background:linear-gradient(135deg,#22E0F0 0%,#1FA8D4 50%,#0078D4 100%);
+  box-shadow:0 0 25px rgba(34,224,240,.4);
+  transform:translateY(-3px);
+}
 
 /* ANIMAÇÕES */
 .reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.2,.8,.2,1)}
@@ -203,6 +267,14 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
   <div class="hero-actions">
     <a href="#cotacao" class="btn-primary">Solicitar Cotação</a>
     <a href="#servicos" class="btn-ghost">Ver Serviços</a>
+    <a href="https://www.instagram.com/ti.atualizado/" target="_blank" rel="noopener noreferrer" class="btn-instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      Instagram
+    </a>
+    <a href="mailto:ti.atualizado@outlook.com.br" class="btn-email">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      E-mail
+    </a>
   </div>
 </header>
 
@@ -347,7 +419,7 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
         </div>
 
         <button type="submit" class="btn-submit">Enviar Solicitação →</button>
-        <p class="form-note">Seus dados são enviados diretamente para nosso e-mail. Sem spam.</p>
+        <p class="form-note">Prefere e-mail? Escreva para <a href="mailto:ti.atualizado@outlook.com.br">ti.atualizado@outlook.com.br</a></p>
       </form>
 
       <div id="sucesso" class="sucesso-msg">
@@ -361,6 +433,14 @@ footer .logo{justify-content:center;margin-bottom:.8rem}
   <div class="logo">
     <div class="logo-mark">TA</div>
     <span>TI Atualizado</span>
+  </div>
+  <div class="social">
+    <a href="https://www.instagram.com/ti.atualizado/" target="_blank" rel="noopener noreferrer" class="instagram" aria-label="Instagram da TI Atualizado">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="mailto:ti.atualizado@outlook.com.br" class="email" aria-label="E-mail da TI Atualizado">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    </a>
   </div>
   <p>© <span id="year"></span> TI Atualizado — Criação de sites profissionais.</p>
 </footer>
